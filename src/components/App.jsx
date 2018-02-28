@@ -1,17 +1,17 @@
 import React from 'react';
-import WeedList from './WeedList';
+import StrainList from './StrainList';
 import { Switch, Route } from 'react-router-dom';
-import { fetchWeedList } from '../actions';
+import { fetchStrainList } from '../actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function App({ dispatch }) {
-  dispatch(fetchWeedList());
+  dispatch(fetchStrainList());
   return (
     <div>
       <h1>App works!</h1>
       <Switch>
-        <Route exact path='/' component={WeedList} />
+        <Route exact path='/' component={StrainList} />
       </Switch>
     </div>
   );

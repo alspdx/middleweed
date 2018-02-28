@@ -1,5 +1,6 @@
 import constants from './../../src/constants';
-import weedListReducer from './../../src/reducers/weedListReducer';
+import strainListReducer from './../../src/reducers/strainListReducer';
+import selectedStrainReducer from './../../src/reducers/selectedStrainReducer';
 import rootReducer from './../../src/reducers/';
 import { createStore } from 'redux';
 import * as actions from './../../src/actions';
@@ -8,18 +9,18 @@ describe('Middleweed', () => {
   const { types, initialState } = constants;
   const store = createStore(rootReducer);
 
-  describe('weedListReducer', () => {
+  describe('strainListReducer', () => {
     it('Should accept and return initial state.', () => {
-      expect(weedListReducer(initialState.weedList, { type: null })).toEqual(initialState.weedList);
+      expect(strainListReducer(initialState.strainList, { type: null })).toEqual(initialState.strainList);
     });
 
     it('Should update state when API list is requested', () => {
-      const action = actions.requestWeedList();
+      const action = actions.requestStrainList();
       const newStateSlice = {
         isFetching: true,
         list: {}
       }
-      expect(weedListReducer(initialState.weedList, action)).toEqual(newStateSlice);
+      expect(strainListReducer(initialState.strainList, action)).toEqual(newStateSlice);
     })
 
     it('Should update state when API returns list', () => {
@@ -27,12 +28,45 @@ describe('Middleweed', () => {
         0: 'first-value',
         1: 'second-value'
       }
-      const action = actions.setWeedList(sampleList);
+      const action = actions.setStrainList(sampleList);
       const newStateSlice = {
         isFetching: false,
         list: sampleList
       }
-      expect(weedListReducer(initialState.weedList, action)).toEqual(newStateSlice);
+      expect(strainListReducer(initialState.strainList, action)).toEqual(newStateSlice);
+    });
+  });
+
+  describe('selectedStrainReducer', () => {
+    it('Should accept and return initial state.', () => {
+      expect(selectedStrainReducer(initialState.selectedStrain, { type: null })).toEqual(initialState.selectedStrain);
+    });
+
+    it('Should set the selected strain when strain name clicked.', () => {
+      const sampleName = 'Hindu Kush';
+      const sampleDetails = {
+        effects: {},
+        flavors: {},
+        id: 1026,
+        race: "indica"
+      };
+      const action = actions.selectStrain(sampleName, sampleDetails);
+      const newStateSlice = {
+        fetchingDesc: true,
+        name: sampleName,
+        details: sampleDetails
+      }
+      expect(selectedStrainReducer(initialState.selectedStrain, action)).toEqual(newStateSlice);
+    });
+
+    it('Should update state when the API returns strain description', () => {
+      const sampleDesc = 'Hindu Kush is a pure indica strain named after the mountain range stretching 500 miles between Pakistan and Afghanistan where it originated. The harsh climate of its homeland has conditioned this strain to express a thick, protective coat of crystal trichomes cherished by hash makers worldwide. With a subtle sweet and earthy sandalwood aroma, Hindu Kush induces a deep sense of calm that helps bring relief to those suffering pain, nausea, and stress disorders.';
+      const newStateSlice = {
+        fetchingDesc: false,
+        desc: sampleDesc
+      };
+      const action = actions.setDescription(sampleDesc);
+      expect(selectedStrainReducer(initialState.selectedStrain, action)).toEqual(newStateSlice);
     });
   });
 
@@ -42,7 +76,8 @@ describe('Middleweed', () => {
     });
 
     it('Should contain logic from both reducers,', () => {
-      expect(store.getState().weedList).toEqual(weedListReducer(initialState.weedList, { type: null }));
+      expect(store.getState().strainList).toEqual(strainListReducer(initialState.strainList, { type: null }));
+      expect(store.getState().selectedStrain).toEqual(selectedStrainReducer(initialState.selectedStrain, { type: null }));
     });
   });
 });

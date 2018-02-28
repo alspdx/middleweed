@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import weedListReducer from './weedListReducer';
+import strainListReducer from './strainListReducer';
+import selectedStrainReducer from './selectedStrainReducer';
 
 const rootReducer = combineReducers ({
-  weedList: weedListReducer
+  strainList: strainListReducer,
+  selectedStrain: selectedStrainReducer
 });
 
 export default rootReducer;

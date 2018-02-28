@@ -1,3 +1,8 @@
 export const initialState = {
-  weedList: {}
+  strainList: {
+    isFetching: false
+  },
+  selectedStrain: {
+    fetchingDesc: false
+  }
 };
