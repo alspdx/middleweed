@@ -1,6 +1,6 @@
 import React from 'react';
 import StrainList from './StrainList';
-import { Switch, Route } from 'react-router-dom';
+import StrainDetails from './StrainDetails';
 import { fetchStrainList } from '../actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,11 +8,24 @@ import { connect } from 'react-redux';
 function App({ dispatch }) {
   dispatch(fetchStrainList());
   return (
-    <div>
-      <h1>App works!</h1>
-      <Switch>
-        <Route exact path='/' component={StrainList} />
-      </Switch>
+    <div className='wrapper'>
+      <style jsx global>{`
+        body {
+          margin: 0;
+          height: 100vh;
+        }
+        #react-app-root {
+          height: 100%;
+        }
+      `}</style>
+      <style jsx>{`
+        .wrapper {
+          display: flex;
+          height: 100%;
+        }
+      `}</style>
+      <StrainList />
+      <StrainDetails />
     </div>
   );
 }

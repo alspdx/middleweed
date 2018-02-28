@@ -21,7 +21,7 @@ describe('Middleweed', () => {
         list: {}
       }
       expect(strainListReducer(initialState.strainList, action)).toEqual(newStateSlice);
-    })
+    });
 
     it('Should update state when API returns list', () => {
       const sampleList = {
